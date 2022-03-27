@@ -6,35 +6,42 @@ See [Delaunator guide](https://mapbox.github.io/delaunator/) (how to get Voronoi
 
 ## Example GDScript
 ```gdscript
-	var delaunator = Delaunator.new();
+var delaunator = Delaunator.new();
 
-	var points = [Vector2(1,1), Vector2(10, 0), Vector2(5, 1), Vector2(1, 5)];
-	delaunator.from(PackedVector2Array(points));
-		
-	prints("Delaunator triangles", delaunator.triangles)
-	prints("           half edges:", delaunator.halfedges)
-	prints("           hull:", delaunator.hull)
-	prints("           hull area:", delaunator.hull_area)
-	
-	points = [Vector2(-1,1), Vector2(1, 1), Vector2(1, -1), Vector2(-1, -1)];
-	delaunator.from(PackedVector2Array(points));
+var points = [Vector2(1,1), Vector2(10, 0), Vector2(5, 1), Vector2(1, 5)];
+delaunator.from(PackedVector2Array(points));
+    
+prints("Delaunator triangles", delaunator.triangles)
+prints("           half edges:", delaunator.halfedges)
+prints("           hull:", delaunator.hull)
+prints("           hull area:", delaunator.hull_area)
 
-	prints("Delaunator triangles", delaunator.triangles)
-	prints("           half edges:", delaunator.halfedges)
-	prints("           hull:", delaunator.hull)
-	prints("           hull area:", delaunator.hull_area)
+points = [Vector2(-1,1), Vector2(1, 1), Vector2(1, -1), Vector2(-1, -1)];
+delaunator.from(PackedVector2Array(points));
+
+prints("Delaunator triangles", delaunator.triangles)
+prints("           half edges:", delaunator.halfedges)
+prints("           hull:", delaunator.hull)
+prints("           hull area:", delaunator.hull_area)
 ```
 
+Note that currently the array is copied back into Godot every time a property is accessed, so take a GDScript copy of it rather than acessing the property more than once.
+
 ## Suggested work remaining
+Help appreciated... or a link to an extisting GDExtensions Delaunator project!
+
 * Github actions, so nobody needs to setup a build environment to use this
-* Optimization (lots of low-hanging memory gains if delaunator_cpp can be switched to operating on Godot types directly)
+* C# bindings
+* Optimization (lots of low-hanging memory gains if delaunator_cpp is switched to operating on Godot types directly)
 * Godot example project
 
 ## Licence
 
 MIT License
 
-Copyright © 2022 Treer
+Copyright 2022 Treer  
+Copyright 2018 Volodymyr Bilonenko  
+Copyright 2017 Mapbox
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
