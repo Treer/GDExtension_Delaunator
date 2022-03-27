@@ -18,34 +18,34 @@ jobs:
       - name: Install build tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential cmake scons pkg-config libx11-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev
+          sudo apt-get install -y build-essential scons pkg-config libx11-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev
       
-      - name: Build godot-cpp ${{ env.BUILD_TARGET }}
+      - name: Build godot-cpp
         run: |
           pushd godot-cpp
           scons target=debug
           popd
 
-      - name: Checkout GDExtension_delaunator
+      - name: Checkout Delaunator GDExtension
         uses: actions/checkout@v3
         with:
-          path: godot-cpp/gdextension-delaunator
+          path: godot-cpp/gdextension_delaunator
 
-      - name: build delaunator Linux ${{ env.BUILD_TARGET }}
+      - name: build delaunator Linux debug
         run: |
-          pushd godot-cpp/gdextension-delaunator
-          scons platform=linux   target=${{ env.BUILD_TARGET }} bits=64 target_name="gddelaunator" target_path="./bin/"
+          pushd godot-cpp/gdextension_delaunator
+          scons platform=linux target=debug bits=64 target_name="gddelaunator" target_path="./bin/"
           popd
 
-      - name: build delaunator Windows ${{ env.BUILD_TARGET }}
+      - name: build delaunator Windows debug
         continue-on-error: true
         run: |
-          pushd godot-cpp/gdextension-delaunator
-          scons platform=windows   target=${{ env.BUILD_TARGET }} bits=64 target_name="gddelaunator" target_path="./bin/"
+          pushd godot-cpp/gdextension_delaunator
+          scons platform=windows target=debug bits=64 target_name="gddelaunator" target_path="./bin/"
           popd        
 
       - name: Upload binaries
         uses: actions/upload-artifact@v2
         with:
-          name: gdextension-delaunator
-          path: godot-cpp/gdextension-delaunator/bin         
+          name: gdextension_delaunator
+          path: godot-cpp/gdextension_delaunator/bin         
