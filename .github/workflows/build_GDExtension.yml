@@ -1,9 +1,10 @@
 name: Build GDExtension
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  workflow_dispatch:
+  #push:
+  #  branches: [ master ]
+  #pull_request:
+  #  branches: [ master ]
 
 jobs:
   build:
@@ -19,11 +20,15 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential scons pkg-config libx11-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev
+          sudo apt-get install -y gcc-mingw-w64 g++-mingw-w64
       
       - name: Build godot-cpp
         run: |
           pushd godot-cpp
-          scons target=debug
+          scons platform=windows target=debug
+          scons platform=windows target=release
+          scons platform=linux   target=debug
+          scons platform=linux   target=release
           popd
 
       - name: Checkout Delaunator GDExtension
@@ -31,17 +36,19 @@ jobs:
         with:
           path: godot-cpp/gdextension_delaunator
 
-      - name: build delaunator Linux debug
+      - name: build delaunator Linux
         run: |
           pushd godot-cpp/gdextension_delaunator
-          scons platform=linux target=debug bits=64 target_name="gddelaunator" target_path="./bin/"
+          scons platform=linux target=debug   bits=64 target_name="gddelaunator" target_path="./bin/"
+          scons platform=linux target=release bits=64 target_name="gddelaunator" target_path="./bin/"
           popd
 
-      - name: build delaunator Windows debug
+      - name: build delaunator Windows
         continue-on-error: true
         run: |
           pushd godot-cpp/gdextension_delaunator
-          scons platform=windows target=debug bits=64 target_name="gddelaunator" target_path="./bin/"
+          scons platform=windows target=debug   bits=64 target_name="gddelaunator" target_path="./bin/"
+          scons platform=windows target=release bits=64 target_name="gddelaunator" target_path="./bin/"
           popd        
 
       - name: Upload binaries

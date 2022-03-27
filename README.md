@@ -11,7 +11,7 @@ var delaunator = Delaunator.new();
 var points = [Vector2(1,1), Vector2(10, 0), Vector2(5, 1), Vector2(1, 5)];
 delaunator.from(PackedVector2Array(points));
     
-prints("Delaunator triangles", delaunator.triangles)
+prints("Delaunator triangles:", delaunator.triangles)
 prints("           half edges:", delaunator.halfedges)
 prints("           hull:", delaunator.hull)
 prints("           hull area:", delaunator.hull_area)
@@ -19,7 +19,7 @@ prints("           hull area:", delaunator.hull_area)
 points = [Vector2(-1,1), Vector2(1, 1), Vector2(1, -1), Vector2(-1, -1)];
 delaunator.from(PackedVector2Array(points));
 
-prints("Delaunator triangles", delaunator.triangles)
+prints("Delaunator triangles:", delaunator.triangles)
 prints("           half edges:", delaunator.halfedges)
 prints("           hull:", delaunator.hull)
 prints("           hull area:", delaunator.hull_area)

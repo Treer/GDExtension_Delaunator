@@ -5,6 +5,6 @@ entry_symbol = "gdextension_delaunator_library_init"
 [libraries]
 
 linux.64.debug = "bin/libgddelaunator.linux.debug.64.so"
-linux.64.release = ""
-windows.64.debug = ""
-windows.64.release = ""
+linux.64.release = "bin/libgddelaunator.linux.release.64.so"
+windows.64.debug = "bin/libgddelaunator.windows.debug.64.dll"
+windows.64.release = "bin/libgddelaunator.windows.release.64.dll"
