@@ -32,6 +32,10 @@ public:
 	Delaunator();
 	~Delaunator();
 
+	enum {
+		INVALID_INDEX = static_cast<int32_t>(std::numeric_limits<std::size_t>::max()) // -1 when exposed to godot as a signed int
+	};
+
 	// Functions
 	void from(const PackedVector2Array &points);
 

@@ -14,9 +14,13 @@ using namespace godot;
 
 void Delaunator::_bind_methods() {
 	
-	// ClassDB::bind_method(D_METHOD("triangulate"), &Delaunator::triangulate);
+  // Constants
+	BIND_CONSTANT(INVALID_INDEX);
+
+  // Functions
 	ClassDB::bind_method(D_METHOD("from"), &Delaunator::from);
 	
+  // Properties
 	ClassDB::bind_method(D_METHOD("get_triangles"), &Delaunator::get_triangles);
 	ADD_PROPERTY(PropertyInfo(Variant::PACKED_INT32_ARRAY, "triangles"), NULL, "get_triangles");
 
@@ -96,7 +100,6 @@ PackedInt32Array Delaunator::get_hull() {
     size_t e = delaunator->hull_start;
     do {
       result.push_back(static_cast<int32_t>(e));
-        //hull_area.push_back((coords[2 * e] - coords[2 * hull_prev[e]]) * (coords[2 * e + 1] + coords[2 * hull_prev[e] + 1]));
       e = delaunator->hull_next[e];
     } while (e != delaunator->hull_start);
   }
