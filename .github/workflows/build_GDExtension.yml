@@ -7,7 +7,7 @@ on:
   #  branches: [ master ]
 
 env:
-  FAST_BUILD: ${{ true }}
+  FAST_BUILD: 'true'
 
 jobs:
   build:
@@ -19,7 +19,7 @@ jobs:
           submodules: 'true'
  
       - name: Copy pre-built godot-cpp Linux
-        if: ${{ env.FAST_BUILD }} == true
+        if: ${{ env.FAST_BUILD == 'true' }}
         uses: dawidd6/action-download-artifact@v2
         with:
           repo: godotengine/godot-cpp
@@ -30,7 +30,7 @@ jobs:
           path: godot-cpp/bin
 
       - name: Copy pre-built godot-cpp Windows
-        if: ${{ env.FAST_BUILD }} == true
+        if: ${{ env.FAST_BUILD == 'true' }}
         uses: dawidd6/action-download-artifact@v2
         with:
           repo: godotengine/godot-cpp
@@ -41,14 +41,14 @@ jobs:
           path: godot-cpp/bin
 
       - name: Install build tools
-        if: ${{ env.FAST_BUILD }} == false
+        if: ${{ env.FAST_BUILD != 'true' }}
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential scons pkg-config libx11-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev
           sudo apt-get install -y mingw-w64 # https://docs.godotengine.org/en/stable/development/compiling/compiling_for_windows.html#cross-compiling-for-windows-from-other-operating-systems
       
       - name: Build godot-cpp
-        if: ${{ env.FAST_BUILD }} == false
+        if: ${{ env.FAST_BUILD != 'true' }}
         run: |
           pushd godot-cpp
           scons platform=windows target=debug
