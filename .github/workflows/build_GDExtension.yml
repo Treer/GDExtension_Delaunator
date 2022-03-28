@@ -1,4 +1,4 @@
-name: Build GDExtension
+name: Build Delaunator GDExtension
 on:
   workflow_dispatch:
   #push:
@@ -10,31 +10,33 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout godot-cpp
+      - name: Checkout
         uses: actions/checkout@v3
         with:
-          repository: godotengine/godot-cpp
-          path: godot-cpp
+          submodules: 'true'
  
       - name: Install build tools
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential scons pkg-config libx11-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev
-          sudo apt-get install -y gcc-mingw-w64 g++-mingw-w64
+          sudo apt-get install -y mingw-w64 # https://docs.godotengine.org/en/stable/development/compiling/compiling_for_windows.html#cross-compiling-for-windows-from-other-operating-systems
       
       - name: Build godot-cpp
         run: |
           pushd godot-cpp
           scons platform=windows target=debug
-          scons platform=windows target=release
-          scons platform=linux   target=debug
-          scons platform=linux   target=release
+          #scons platform=windows target=release
+          #scons platform=linux   target=debug
+          #scons platform=linux   target=release
           popd
 
-      - name: Checkout Delaunator GDExtension
-        uses: actions/checkout@v3
-        with:
-          path: godot-cpp/gdextension_delaunator
+      - name: build delaunator Windows
+        #continue-on-error: true
+        run: |
+          pushd godot-cpp/gdextension_delaunator
+          scons platform=windows target=debug   bits=64 target_name="gddelaunator" target_path="./bin/"
+          scons platform=windows target=release bits=64 target_name="gddelaunator" target_path="./bin/"
+          popd        
 
       - name: build delaunator Linux
         run: |
@@ -43,16 +45,8 @@ jobs:
           scons platform=linux target=release bits=64 target_name="gddelaunator" target_path="./bin/"
           popd
 
-      - name: build delaunator Windows
-        continue-on-error: true
-        run: |
-          pushd godot-cpp/gdextension_delaunator
-          scons platform=windows target=debug   bits=64 target_name="gddelaunator" target_path="./bin/"
-          scons platform=windows target=release bits=64 target_name="gddelaunator" target_path="./bin/"
-          popd        
-
       - name: Upload binaries
         uses: actions/upload-artifact@v2
         with:
-          name: gdextension_delaunator
-          path: godot-cpp/gdextension_delaunator/bin         
+          name: delaunator_gdextension
+          path: demo

@@ -3,12 +3,11 @@ import os
 import sys
 
 # default values, adapt them to your setup
-default_library_name = "libgdexample"
-default_target_path = "demo/bin/"
+default_library_name = "libgddelaunator"
+default_target_path = "demo/addons/delaunator_gdextension/bin/"
 
 # Local dependency paths, adapt them to your setup
-cpp_bindings_path = "../"
-# cpp_bindings_path = "godot-cpp/"
+cpp_bindings_path = "godot-cpp/"
 godot_headers_path = cpp_bindings_path + "godot-headers/"
 cpp_library = "libgodot-cpp"
 
