@@ -60,17 +60,13 @@ jobs:
       - name: build delaunator Windows
         #continue-on-error: true
         run: |
-          pushd godot-cpp/gdextension_delaunator
           scons platform=windows target=debug   bits=64 target_name="gddelaunator" target_path="./bin/"
           scons platform=windows target=release bits=64 target_name="gddelaunator" target_path="./bin/"
-          popd        
 
       - name: build delaunator Linux
         run: |
-          pushd godot-cpp/gdextension_delaunator
           scons platform=linux target=debug   bits=64 target_name="gddelaunator" target_path="./bin/"
           scons platform=linux target=release bits=64 target_name="gddelaunator" target_path="./bin/"
-          popd
 
       - name: Upload binaries
         uses: actions/upload-artifact@v2
