@@ -6,6 +6,9 @@ on:
   #pull_request:
   #  branches: [ master ]
 
+env:
+  FAST_BUILD: ${{ true }}
+
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -15,21 +18,45 @@ jobs:
         with:
           submodules: 'true'
  
+      - name: Copy pre-built godot-cpp Linux
+        if: ${{ env.FAST_BUILD == true }}
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          repo: godotengine/godot-cpp
+          workflow: ci.yml
+          workflow_conclusion: success
+          check_artifacts: true
+          name: godot-cpp-linux-mingw-x86_64-release
+          path: godot-cpp/bin
+
+      - name: Copy pre-built godot-cpp Windows
+        if: ${{ env.FAST_BUILD == true }}
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          repo: godotengine/godot-cpp
+          workflow: ci.yml
+          workflow_conclusion: success
+          check_artifacts: true
+          name: godot-cpp-windows-msvc2019-x86_64-release
+          path: godot-cpp/bin
+
       - name: Install build tools
+        if: ${{ env.FAST_BUILD == false }}
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential scons pkg-config libx11-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev
           sudo apt-get install -y mingw-w64 # https://docs.godotengine.org/en/stable/development/compiling/compiling_for_windows.html#cross-compiling-for-windows-from-other-operating-systems
       
       - name: Build godot-cpp
+        if: ${{ env.FAST_BUILD == false }}
         run: |
           pushd godot-cpp
           scons platform=windows target=debug
-          #scons platform=windows target=release
-          #scons platform=linux   target=debug
-          #scons platform=linux   target=release
+          scons platform=windows target=release
+          scons platform=linux   target=debug
+          scons platform=linux   target=release
           popd
-
+          
       - name: build delaunator Windows
         #continue-on-error: true
         run: |
