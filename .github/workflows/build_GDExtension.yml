@@ -1,4 +1,4 @@
-name: Build Delaunator GDExtension
+name: Build GDExtension
 on:
   workflow_dispatch:
   #push:
@@ -7,7 +7,7 @@ on:
   #  branches: [ master ]
 
 env:
-  FAST_BUILD: 'true'
+  FAST_BUILD: 'true' # If 'true', tries to download the godot-cpp artifacts instead of building them
 
 jobs:
   build:
@@ -57,15 +57,15 @@ jobs:
           popd
           
       - name: build delaunator Windows
-        #continue-on-error: true
+        continue-on-error: true
         run: |
-          scons platform=windows target=debug   bits=64 target_name="gddelaunator" target_path="./bin/"
-          scons platform=windows target=release bits=64 target_name="gddelaunator" target_path="./bin/"
+          scons platform=windows target=debug   bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
+          scons platform=windows target=release bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
 
       - name: build delaunator Linux
         run: |
-          scons platform=linux target=debug   bits=64 target_name="gddelaunator" target_path="./bin/"
-          scons platform=linux target=release bits=64 target_name="gddelaunator" target_path="./bin/"
+          scons platform=linux target=debug   bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
+          scons platform=linux target=release bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
 
       - name: Upload binaries
         uses: actions/upload-artifact@v2
