@@ -8,14 +8,9 @@
 #endif
 
 #include <godot_cpp/classes/ref_counted.hpp>
-//#include <godot_cpp/classes/global_constants.hpp>
-//#include <godot_cpp/core/binder_common.hpp>
+#include "delaunator.hpp"
 
 using namespace godot;
-
-namespace delaunator_cpp {
-	class Delaunator;
-}
 
 
 class Delaunator : public RefCounted {
