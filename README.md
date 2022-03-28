@@ -1,6 +1,8 @@
-# Dalaunator GDExtension for Godot 4
+# Delaunator GDExtension for Godot 4
 
 A fast library for Delaunay triangulation.
+
+[Work in progress]
 
 See [Delaunator guide](https://mapbox.github.io/delaunator/) (how to get Voronoi polygons etc.), as documentation here is a work in progress
 
@@ -25,10 +27,10 @@ prints("           hull:", delaunator.hull)
 prints("           hull area:", delaunator.hull_area)
 ```
 
-Note that currently the array is copied back into Godot every time a property is accessed, so take a GDScript copy of it rather than acessing the property more than once.
+Note that currently the array is copied back into Godot every time a property is accessed, so take a GDScript copy of it rather than accessing the property more than once.
 
 ## Suggested work remaining
-Help appreciated... or a link to an extisting GDExtensions Delaunator project!
+Help appreciated... or a link to an existing GDExtensions Delaunator project!
 
 * Github actions, so nobody needs to setup a build environment to use this
 * C# bindings
