@@ -59,12 +59,16 @@ jobs:
       - name: build delaunator Windows
         continue-on-error: true
         run: |
-          scons platform=windows target=debug   bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
           scons platform=windows target=release bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
+          scons platform=windows target=debug   bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
 
-      - name: build delaunator Linux
+      - name: build delaunator Linux debug
+        if: ${{ env.FAST_BUILD != 'true' }} # FAST_BUILD can only download release artifacts
         run: |
           scons platform=linux target=debug   bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
+
+      - name: build delaunator Linux release
+        run: |
           scons platform=linux target=release bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
 
       - name: Upload binaries
