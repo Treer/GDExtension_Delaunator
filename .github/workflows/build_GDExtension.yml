@@ -19,7 +19,7 @@ jobs:
           submodules: 'true'
  
       - name: Copy pre-built godot-cpp Linux
-        if: ${{ env.FAST_BUILD == true }}
+        if: ${{ env.FAST_BUILD }} == true
         uses: dawidd6/action-download-artifact@v2
         with:
           repo: godotengine/godot-cpp
@@ -30,7 +30,7 @@ jobs:
           path: godot-cpp/bin
 
       - name: Copy pre-built godot-cpp Windows
-        if: ${{ env.FAST_BUILD == true }}
+        if: env.FAST_BUILD == true
         uses: dawidd6/action-download-artifact@v2
         with:
           repo: godotengine/godot-cpp
