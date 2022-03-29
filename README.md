@@ -68,4 +68,5 @@ SOFTWARE.
 
 ## Acknowledgements
 * Volodymyr Bilonenko, [ported Delaunator to C++](https://github.com/delfrrr/delaunator-cpp) (MIT)
+* Andrew Bell, [worked on Delaunator C++](https://github.com/abellgithub/delaunator-cpp)
 * Unknown, [GDExtension Project Creator](https://github.com/nonunknown/gdextension-creator) (MIT)
