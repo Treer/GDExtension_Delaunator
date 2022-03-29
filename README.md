@@ -6,6 +6,9 @@ A fast library for Delaunay triangulation.
 
 See [Delaunator guide](https://mapbox.github.io/delaunator/) (how to get Voronoi polygons etc.), as documentation here is a work in progress
 
+## Builds
+I'm working on getting Github to compile the Windows DLL, but if you're logged into Github there is a Linux build in the Actions tab.
+
 ## Example GDScript
 ```gdscript
 var delaunator = Delaunator.new();
