@@ -58,7 +58,7 @@ jobs:
           popd
           
       - name: build delaunator Windows
-        continue-on-error: true # Godot's SConstruct file is conflating host-platform with target-platform, so compiling for Windows on Linux leads to a Windows-command-line syntax given in the g++ arguments
+        continue-on-error: true
         run: |
           scons platform=windows target=release bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
           scons platform=windows target=debug   bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
@@ -77,3 +77,12 @@ jobs:
         with:
           name: delaunator_gdextension
           path: demo
+
+      - name: Publish release
+        continue-on-error: true
+        uses: softprops/action-gh-release@v1
+        with:
+          # note you'll typically need to create a personal access token
+          # with permissions to create releases in the other repo
+          token: ${{ secrets.RELEASE_TOKEN }}
+          files: demo
