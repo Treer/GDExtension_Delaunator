@@ -4,7 +4,7 @@ A fast library for Delaunay triangulation.
 
 This GDExtension is still in alpha.
 
-See [Delaunator guide](https://mapbox.github.io/delaunator/) (how to get Voronoi polygons etc.), as documentation here is a work in progress
+See [Delaunator guide](https://mapbox.github.io/delaunator/) (how to get Voronoi polygons etc.) and [API reference](https://github.com/mapbox/delaunator#api-reference) for interim details, as documentation here is a work in progress
 
 ## Installation
 [An initial build is available](https://github.com/Treer/GDExtension_Delaunator/suites/5862211168/artifacts/197641652) from the [Actions](https://github.com/Treer/GDExtension_Delaunator/actions) tab, however you will need to have logged into Github to access it.
