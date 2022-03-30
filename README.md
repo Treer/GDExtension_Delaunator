@@ -7,7 +7,7 @@ This GDExtension is still in alpha.
 See [Delaunator guide](https://mapbox.github.io/delaunator/) (how to get Voronoi polygons etc.), as documentation here is a work in progress
 
 ## Installation
-An initial build is [available from the Actions tab](https://github.com/Treer/GDExtension_Delaunator/suites/5862211168/artifacts/197641652), however you will need to have logged into Github to access it.
+[An initial build is available](https://github.com/Treer/GDExtension_Delaunator/suites/5862211168/artifacts/197641652) from the [Actions](https://github.com/Treer/GDExtension_Delaunator/actions) tab, however you will need to have logged into Github to access it.
 
 Copy the `delaunator_gdextension` folder from the zip file into your project's `addons` folder.
 
