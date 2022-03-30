@@ -48,8 +48,8 @@ Help appreciated... or a link to an existing GDExtensions Delaunator project!
 
 MIT License
 
-Copyright 2022 Treer
-Copyright 2020 Andrew Bell
+Copyright 2022 Treer  
+Copyright 2020 Andrew Bell  
 Copyright 2018 Volodymyr Bilonenko  
 Copyright 2017 Mapbox
 
