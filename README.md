@@ -19,7 +19,7 @@ delaunator.from(PackedVector2Array(points));
 prints("Delaunator triangles:", delaunator.triangles)
 prints("           half edges:", delaunator.halfedges)
 prints("           hull:", delaunator.hull)
-prints("           hull area:", delaunator.hull_area)
+#prints("           hull area:", delaunator.hull_area) # commented out as this call seems to crash under Windows, and returns 0 under Linux, not sure if gdextension issue or my issue
 
 points = [Vector2(-1,1), Vector2(1, 1), Vector2(1, -1), Vector2(-1, -1)];
 delaunator.from(PackedVector2Array(points));
@@ -27,7 +27,7 @@ delaunator.from(PackedVector2Array(points));
 prints("Delaunator triangles:", delaunator.triangles)
 prints("           half edges:", delaunator.halfedges)
 prints("           hull:", delaunator.hull)
-prints("           hull area:", delaunator.hull_area)
+#prints("           hull area:", delaunator.hull_area) # commented out as this call seems to crash under Windows, and returns 0 under Linux, not sure if gdextension issue or my issue
 ```
 
 Note that currently the array is copied back into Godot every time a property is accessed, so take a GDScript copy of it rather than accessing the property more than once.
