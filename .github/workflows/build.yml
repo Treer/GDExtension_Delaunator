@@ -50,7 +50,6 @@ jobs:
 
       - name: Publish release
         continue-on-error: true # fails if a tag wasn't set
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
           # note you'll typically need to create a personal access token
