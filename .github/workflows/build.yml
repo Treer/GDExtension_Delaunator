@@ -1,14 +1,10 @@
-name: Build GDExtension
+name: Build addon
 on:
   workflow_dispatch:
   #push:
   #  branches: [ master ]
   #pull_request:
   #  branches: [ master ]
-
-env:
-  FAST_BUILD: 'false' # If 'true', tries to download the godot-cpp artifacts instead of building them
-                      # but it doesn't work because the godot-cpp/gen/** isn't in the artifacts
 
 jobs:
   build:
@@ -19,28 +15,6 @@ jobs:
         with:
           submodules: 'true'
  
-      - name: Copy pre-built godot-cpp Linux
-        if: ${{ env.FAST_BUILD == 'true' }}
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          repo: godotengine/godot-cpp
-          workflow: ci.yml
-          workflow_conclusion: success
-          check_artifacts: true
-          name: godot-cpp-linux-mingw-x86_64-release
-          path: godot-cpp/bin
-
-      - name: Copy pre-built godot-cpp Windows
-        if: ${{ env.FAST_BUILD == 'true' }}
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          repo: godotengine/godot-cpp
-          workflow: ci.yml
-          workflow_conclusion: success
-          check_artifacts: true
-          name: godot-cpp-windows-msvc2019-x86_64-release
-          path: godot-cpp/bin
-
       - name: Install build tools
         run: |
           sudo apt-get update
@@ -64,12 +38,8 @@ jobs:
           scons platform=windows target=debug   bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
 
       - name: build delaunator Linux debug
-        if: ${{ env.FAST_BUILD != 'true' }} # FAST_BUILD can only download release artifacts
         run: |
           scons platform=linux target=debug   bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
-
-      - name: build delaunator Linux release
-        run: |
           scons platform=linux target=release bits=64 target_name="gddelaunator" target_path="./demo/addons/delaunator_gdextension/bin/"
 
       - name: Upload binaries
@@ -79,7 +49,8 @@ jobs:
           path: demo
 
       - name: Publish release
-        continue-on-error: true
+        continue-on-error: true # fails if a tag wasn't set
+        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
           # note you'll typically need to create a personal access token
