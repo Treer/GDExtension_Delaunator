@@ -53,7 +53,10 @@ jobs:
           path: demo
 
       - name: zip artifacts for release
-        run: zip delaunator_gdextension.zip demo/* -r
+        run: |
+          pushd demo
+          zip ../delaunator_gdextension.zip addons/* -r
+          popd
 
       - name: Publish release
         continue-on-error: true # the step will fail if build wasn't triggered by a tag
