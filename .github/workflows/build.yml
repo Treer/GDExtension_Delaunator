@@ -21,8 +21,9 @@ jobs:
       - name: Install build tools
         run: |
           sudo apt-get update
+          sudo apt-get install -y zip        # for zipping release artifacts
           sudo apt-get install -y build-essential scons pkg-config libx11-dev libxcursor-dev libxinerama-dev libgl1-mesa-dev libglu-dev libasound2-dev libpulse-dev libudev-dev libxi-dev libxrandr-dev
-          sudo apt-get install -y mingw-w64 # https://docs.godotengine.org/en/stable/development/compiling/compiling_for_windows.html#cross-compiling-for-windows-from-other-operating-systems
+          sudo apt-get install -y mingw-w64  # https://docs.godotengine.org/en/stable/development/compiling/compiling_for_windows.html#cross-compiling-for-windows-from-other-operating-systems
       
       - name: Build godot-cpp
         if: ${{ env.FAST_BUILD != 'true' }}
@@ -51,6 +52,9 @@ jobs:
           name: delaunator_gdextension
           path: demo
 
+      - name: zip artifacts for release
+        run: zip delaunator_gdextension.zip demo/* -r
+
       - name: Publish release
         continue-on-error: true # the step will fail if build wasn't triggered by a tag
         uses: softprops/action-gh-release@v1
@@ -58,4 +62,4 @@ jobs:
           # note you'll typically need to create a personal access token
           # with permissions to create releases in the other repo
           token: ${{ secrets.RELEASE_TOKEN }}
-          files: demo
+          files: delaunator_gdextension.zip
