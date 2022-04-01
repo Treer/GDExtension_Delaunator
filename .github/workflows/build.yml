@@ -1,6 +1,9 @@
 name: Build addon
 on:
   workflow_dispatch:
+  push:
+    tags:
+      - "v*.*"  
   #push:
   #  branches: [ master ]
   #pull_request:
@@ -49,7 +52,7 @@ jobs:
           path: demo
 
       - name: Publish release
-        continue-on-error: true # fails if a tag wasn't set
+        continue-on-error: true # the step will fail if build wasn't triggered by a tag
         uses: softprops/action-gh-release@v1
         with:
           # note you'll typically need to create a personal access token
