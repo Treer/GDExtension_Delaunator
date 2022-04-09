@@ -36,6 +36,9 @@
 #include <vector>
 #include <ostream>
 
+#include <godot_cpp/variant/vector2.hpp>
+#include <godot_cpp/variant/packed_vector2_array.hpp>
+
 namespace delaunator_cpp {
 
 constexpr std::size_t INVALID_INDEX =
@@ -83,6 +86,15 @@ public:
         return dist < 1e-20;
     }
 
+    static bool equal(const godot::Vector2& p1, const godot::Vector2& p2, double span)
+    {
+        double dist = p1.distance_squared_to(p2) / span;
+
+        // ABELL - This number should be examined to figure how how
+        // it correlates with the breakdown of calculating determinants.
+        return dist < CMP_EPSILON;
+    }
+
 private:
     double m_x;
     double m_y;
@@ -94,13 +106,13 @@ inline std::ostream& operator<<(std::ostream& out, const Point& p)
     return out;
 }
 
-
+/*
 class Points
 {
 public:
     using const_iterator = Point const *;
 
-    Points(const std::vector<double>& coords) : m_coords(coords)
+    Points(const godot::PackedVector2Array& coords) : m_coords(coords)
     {}
 
     const Point& operator[](size_t offset)
@@ -118,14 +130,14 @@ public:
         { return m_coords.size() / 2; }
 
 private:
-    const std::vector<double>& m_coords;
-};
+    const godot::PackedVector2Array& m_coords;
+};*/
 
 class Delaunator {
 
 public:
-    std::vector<double> const& coords;
-    Points m_points;
+    //godot::PackedVector2Array const& coords;
+    godot::PackedVector2Array m_points;
 
     // 'triangles' stores the indices to the 'X's of the input
     // 'coords'.
@@ -146,7 +158,7 @@ public:
     std::vector<std::size_t> hull_tri;
     std::size_t hull_start;
 
-    INLINE Delaunator(std::vector<double> const& in_coords);
+    INLINE Delaunator(godot::PackedVector2Array const& in_coords);
     INLINE double get_hull_area();
     INLINE double get_triangle_area();
 
@@ -157,7 +169,9 @@ private:
     std::vector<std::size_t> m_edge_stack;
 
     INLINE std::size_t legalize(std::size_t a);
-    INLINE std::size_t hash_key(double x, double y) const;
+    //INLINE std::size_t hash_key(double x, double y) const;
+    INLINE std::size_t hash_key(const godot::Vector2& p) const;
+
     INLINE std::size_t add_triangle(
         std::size_t i0,
         std::size_t i1,

@@ -32,6 +32,9 @@ void Delaunator::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("get_hull_area"), &Delaunator::get_hull_area);
 	ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "hull_area"), NULL, "get_hull_area");
+
+	ClassDB::bind_method(D_METHOD("get_compile_time"), &Delaunator::get_compile_time);
+	ADD_PROPERTY(PropertyInfo(Variant::STRING, "compile_time"), NULL, "get_compile_time");
 }
 
 Delaunator::Delaunator() {
@@ -45,19 +48,10 @@ Delaunator::~Delaunator() {
   delaunator = NULL;
 }
 
-void Delaunator::from(const PackedVector2Array &points) {
+void Delaunator::from(PackedVector2Array points) {
   
-  std::size_t size = points.size();
-  std::vector<double> coords{};
-  coords.reserve(size * 2);
-  for (std::size_t i = 0; i < size; i++) {
-    // TODO: modify delaunator to work in PackedVector2Arrays and PackedInt32Arrays directly
-    coords.emplace_back(static_cast<double>(points[i].x));
-    coords.emplace_back(static_cast<double>(points[i].y));
-  }
-
   if (delaunator) delete(delaunator);
-  delaunator = new delaunator_cpp::Delaunator(coords);
+  delaunator = new delaunator_cpp::Delaunator(points);
 }
 
 PackedInt32Array Delaunator::get_triangles() {
@@ -111,7 +105,12 @@ float Delaunator::get_hull_area() {
   PackedInt32Array result;
 
   if(delaunator) {
-    return static_cast<float>(delaunator->get_hull_area());
+    //return static_cast<float>(delaunator->get_triangle_area()); // used to check get_hull_area() value
+    return static_cast<float>(delaunator->get_hull_area());    
   }
   return std::numeric_limits<float>::quiet_NaN();
+}
+
+String Delaunator::get_compile_time() {
+  return __TIME__;
 }

@@ -32,13 +32,14 @@ public:
 	};
 
 	// Functions
-	void from(const PackedVector2Array &points);
+	void from(PackedVector2Array points);
 
 	// Properties
 	PackedInt32Array get_triangles();
 	PackedInt32Array get_halfedges();
 	PackedInt32Array get_hull();
 	float get_hull_area();
+	String get_compile_time();
 };
 
 #endif // ! GDDELAUNATOR_CLASS_H

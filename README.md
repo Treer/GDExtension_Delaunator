@@ -22,7 +22,7 @@ delaunator.from(PackedVector2Array(points));
 prints("Delaunator triangles:", delaunator.triangles)
 prints("           half edges:", delaunator.halfedges)
 prints("           hull:", delaunator.hull)
-#prints("           hull area:", delaunator.hull_area) # commented out due to bug - I'd need to retain the double-precision coords array in memory to make this work, or pre-calculate it inside from(), neither of which are justified
+prints("           hull area:", delaunator.hull_area)
 
 points = [Vector2(-1,1), Vector2(1, 1), Vector2(1, -1), Vector2(-1, -1)];
 delaunator.from(PackedVector2Array(points));
@@ -30,7 +30,7 @@ delaunator.from(PackedVector2Array(points));
 prints("Delaunator triangles:", delaunator.triangles)
 prints("           half edges:", delaunator.halfedges)
 prints("           hull:", delaunator.hull)
-#prints("           hull area:", delaunator.hull_area) # commented out due to bug - I'd need to retain the double-precision coords array in memory to make this work, or pre-calculate it inside from(), neither of which are justified
+prints("           hull area:", delaunator.hull_area)
 ```
 
 Note that currently the array is copied back into Godot every time a property is accessed, so take a GDScript copy of it rather than accessing the property more than once.
