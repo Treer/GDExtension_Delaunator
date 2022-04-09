@@ -1,7 +1,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT) ![example workflow](https://github.com/Treer/GDExtension_Delaunator/actions/workflows/build.yml/badge.svg)
 # Delaunator GDExtension for Godot 4
 
-A fast library for Delaunay triangulation.
+A fast library for Delaunay triangulation. It's currently managing 100,000 points in ~50ms on a 2015 processor (i7-6700).
 
 This GDExtension is still in alpha.
 
