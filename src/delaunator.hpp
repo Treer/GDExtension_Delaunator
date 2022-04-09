@@ -106,37 +106,9 @@ inline std::ostream& operator<<(std::ostream& out, const Point& p)
     return out;
 }
 
-/*
-class Points
-{
-public:
-    using const_iterator = Point const *;
-
-    Points(const godot::PackedVector2Array& coords) : m_coords(coords)
-    {}
-
-    const Point& operator[](size_t offset)
-    {
-        return reinterpret_cast<const Point&>(
-            *(m_coords.data() + (offset * 2)));
-    };
-
-    Points::const_iterator begin() const
-        { return reinterpret_cast<const Point *>(m_coords.data()); }
-    Points::const_iterator end() const
-        { return reinterpret_cast<const Point *>(
-            m_coords.data() + m_coords.size()); }
-    size_t size() const
-        { return m_coords.size() / 2; }
-
-private:
-    const godot::PackedVector2Array& m_coords;
-};*/
-
 class Delaunator {
 
 public:
-    //godot::PackedVector2Array const& coords;
     godot::PackedVector2Array m_points;
 
     // 'triangles' stores the indices to the 'X's of the input
@@ -169,7 +141,6 @@ private:
     std::vector<std::size_t> m_edge_stack;
 
     INLINE std::size_t legalize(std::size_t a);
-    //INLINE std::size_t hash_key(double x, double y) const;
     INLINE std::size_t hash_key(const godot::Vector2& p) const;
 
     INLINE std::size_t add_triangle(

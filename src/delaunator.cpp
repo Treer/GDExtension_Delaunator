@@ -89,32 +89,6 @@ inline double circumradius(const godot::Vector2& p1, const godot::Vector2& p2, c
     return (std::numeric_limits<double>::max)();
 }
 
-inline double circumradius(
-    const double ax,
-    const double ay,
-    const double bx,
-    const double by,
-    const double cx,
-    const double cy) {
-    const double dx = bx - ax;
-    const double dy = by - ay;
-    const double ex = cx - ax;
-    const double ey = cy - ay;
-
-    const double bl = dx * dx + dy * dy;
-    const double cl = ex * ex + ey * ey;
-    const double d = dx * ey - dy * ex;
-
-    const double x = (ey * bl - dy * cl) * 0.5 / d;
-    const double y = (dx * cl - ex * bl) * 0.5 / d;
-
-    if ((bl > 0.0 || bl < 0.0) && (cl > 0.0 || cl < 0.0) && (d > 0.0 || d < 0.0)) {
-        return x * x + y * y;
-    } else {
-        return (std::numeric_limits<double>::max)();
-    }
-}
-
 inline bool clockwise(const godot::Vector2& p0, const godot::Vector2& p1, const godot::Vector2& p2)
 {
     godot::Vector2 v0 = p1 - p0;
@@ -161,56 +135,6 @@ inline bool counterclockwise(real_t px, real_t py, real_t qx, real_t qy, real_t 
     return counterclockwise(p0, p1, p2);
 }
 
-/* source points are in single precision so no need to take double args
-inline bool clockwise(const Point& p0, const Point& p1, const Point& p2)
-{
-    Point v0 = Point::vector(p0, p1);
-    Point v1 = Point::vector(p0, p2);
-    double det = Point::determinant(v0, v1);
-    double dist = v0.magnitude2() + v1.magnitude2();
-    if (det == 0)
-    {
-        return false;
-    }
-    double reldet = std::abs(dist / det);
-    if (reldet > 1e14)
-        return false;
-    return det < 0;
-}
-
-inline bool clockwise(double px, double py, double qx, double qy,
-    double rx, double ry)
-{
-    Point p0(px, py);
-    Point p1(qx, qy);
-    Point p2(rx, ry);
-    return clockwise(p0, p1, p2);
-}
-
-inline bool counterclockwise(const Point& p0, const Point& p1, const Point& p2)
-{
-    Point v0 = Point::vector(p0, p1);
-    Point v1 = Point::vector(p0, p2);
-    double det = Point::determinant(v0, v1);
-    double dist = v0.magnitude2() + v1.magnitude2();
-    if (det == 0)
-        return false;
-    double reldet = std::abs(dist / det);
-    if (reldet > 1e14)
-        return false;
-    return det > 0;
-}
-
-inline bool counterclockwise(double px, double py, double qx, double qy,
-    double rx, double ry)
-{
-    Point p0(px, py);
-    Point p1(qx, qy);
-    Point p2(rx, ry);
-    return counterclockwise(p0, p1, p2);
-}*/
-
-
 inline Point circumcenter(
     const godot::Vector2& a,
     const godot::Vector2& b,
@@ -233,30 +157,6 @@ inline Point circumcenter(
 
     return Point(x, y);
 }
-
-/*
-inline Point circumcenter(
-    const double ax,
-    const double ay,
-    const double bx,
-    const double by,
-    const double cx,
-    const double cy) {
-    const double dx = bx - ax;
-    const double dy = by - ay;
-    const double ex = cx - ax;
-    const double ey = cy - ay;
-
-    const double bl = dx * dx + dy * dy;
-    const double cl = ex * ex + ey * ey;
-    //ABELL - This is suspect for div-by-0.
-    const double d = dx * ey - dy * ex;
-
-    const double x = ax + (ey * bl - dy * cl) * 0.5 / d;
-    const double y = ay + (dx * cl - ex * bl) * 0.5 / d;
-
-    return Point(x, y);
-}*/
 
 inline bool in_circle(
     const godot::Vector2& a,
@@ -281,35 +181,8 @@ inline bool in_circle(
             dy * (ex * cp - bp * fx) +
             ap * (ex * fy - ey * fx)) < 0.0;
 }
-/*
-inline bool in_circle(
-    const double ax,
-    const double ay,
-    const double bx,
-    const double by,
-    const double cx,
-    const double cy,
-    const double px,
-    const double py) {
-    const double dx = ax - px;
-    const double dy = ay - py;
-    const double ex = bx - px;
-    const double ey = by - py;
-    const double fx = cx - px;
-    const double fy = cy - py;
 
-    const double ap = dx * dx + dy * dy;
-    const double bp = ex * ex + ey * ey;
-    const double cp = fx * fx + fy * fy;
-
-    return (dx * (ey * cp - bp * fy) -
-            dy * (ex * cp - bp * fx) +
-            ap * (ex * fy - ey * fx)) < 0.0;
-}
-*/
 constexpr double EPSILON = std::numeric_limits<double>::epsilon();
-
-constexpr real_t EPSILON_real_t = std::numeric_limits<real_t>::epsilon();
 
 inline bool check_pts_equal(double x1, double y1, double x2, double y2) {
     return std::fabs(x1 - x2) <= EPSILON &&
@@ -413,16 +286,6 @@ Delaunator::Delaunator(godot::PackedVector2Array const& in_points)
         std::swap(point_1, point_2);
     }
 
-/*
-    double i0x = static_cast<double>(p0.x);
-    double i0y = static_cast<double>(p0.y);
-    double i1x = static_cast<double>(m_points[i1].x);
-    double i1y = static_cast<double>(m_points[i1].y);
-    double i2x = static_cast<double>(m_points[i2].x);
-    double i2y = static_cast<double>(m_points[i2].y);
-
-    m_center = circumcenter(i0x, i0y, i1x, i1y, i2x, i2y);
-*/
     m_center = circumcenter(*point_0, *point_1, *point_2);
 
     // Calculate the distances from the center once to avoid having to
@@ -477,17 +340,12 @@ Delaunator::Delaunator(godot::PackedVector2Array const& in_points)
     triangles.reserve(max_triangles * 3);
     halfedges.reserve(max_triangles * 3);
     add_triangle(i0, i1, i2, INVALID_INDEX, INVALID_INDEX, INVALID_INDEX);
-    //double xp = std::numeric_limits<double>::quiet_NaN();
-    //double yp = std::numeric_limits<double>::quiet_NaN();
     godot::Vector2 point_prev(std::numeric_limits<real_t>::quiet_NaN(), std::numeric_limits<real_t>::quiet_NaN());
 
     // Go through points based on distance from the center.
     for (std::size_t k = 0; k < n; k++) {
         const std::size_t i = ids[k];
-        //const double x = coords[2 * i];
-        //const double y = coords[2 * i + 1];
         const godot::Vector2& point_i = m_points[i];
-
 
         // skip near-duplicate points
         if (k > 0 && check_pts_equal(point_i, point_prev))
@@ -618,7 +476,8 @@ double Delaunator::get_hull_area()
     return sum(hull_area);
 }
 
-// used by unit test to check get_hull_area()
+// Was used by unit test to check get_hull_area().
+// Doesn't have to be optimized.
 double Delaunator::get_triangle_area()
 {    
     std::vector<double> vals;
@@ -683,22 +542,11 @@ std::size_t Delaunator::legalize(std::size_t a) {
         const std::size_t pl = triangles[al];
         const std::size_t p1 = triangles[bl];
 
-/*
-        const bool illegal = in_circle(
-            coords[2 * p0],
-            coords[2 * p0 + 1],
-            coords[2 * pr],
-            coords[2 * pr + 1],
-            coords[2 * pl],
-            coords[2 * pl + 1],
-            coords[2 * p1],
-            coords[2 * p1 + 1]);
-*/
         const bool illegal = in_circle(
             m_points[p0],
             m_points[pr],
             m_points[pl],
-            m_points[p1]);
+            m_points[p1]); // WARNING: pl and p1 are different!
 
         if (illegal) {
             triangles[a] = p1;
@@ -742,15 +590,6 @@ std::size_t Delaunator::legalize(std::size_t a) {
     }
     return ar;
 }
-
-/*
-std::size_t Delaunator::hash_key(const double x, const double y) const {
-    const double dx = x - m_center.x();
-    const double dy = y - m_center.y();
-    return fast_mod(
-        static_cast<std::size_t>(std::llround(std::floor(pseudo_angle(dx, dy) * static_cast<double>(m_hash_size)))),
-        m_hash_size);
-}*/
 
 std::size_t Delaunator::hash_key(const godot::Vector2& p) const {
     const double dx = p.x - m_center.x();
