@@ -43,6 +43,11 @@ Any help appreciated
 * [ ] Optimization (lots of low-hanging memory gains if delaunator_cpp is switched to operating on Godot types directly)
 * [ ] Godot example project & documentation
 
+## Troubleshooting
+* Godot crashes or closes when using this GDExtenion:
+    * Godot 4's native interface isn't finalized/stable yet so the delaunator binaries might only work with a version of Godot 4 compiled around the same time this project's godot-cpp submodule was last updated. [Older releases](https://github.com/Treer/GDExtension_Delaunator/releases) are available, as are older releases of Godot, but better to just wait until everything is stable.
+    * Memory related bugs in this [alpha] project are possible too, in which case limiting which calls are being made might narrow the bug down.
+
 ## Acknowledgements
 * Volodymyr Bilonenko, [ported Delaunator to C++](https://github.com/delfrrr/delaunator-cpp) (MIT)
 * Andrew Bell, [worked on Delaunator C++](https://github.com/abellgithub/delaunator-cpp)
