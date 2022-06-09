@@ -461,6 +461,7 @@ Delaunator::Delaunator(godot::PackedVector2Array const& in_points)
     }
 }
 
+// Returns twice the hull area, divide by two for actual area.
 double Delaunator::get_hull_area()
 {
     std::vector<double> hull_area;
@@ -476,8 +477,9 @@ double Delaunator::get_hull_area()
     return sum(hull_area);
 }
 
-// Was used by unit test to check get_hull_area().
-// Doesn't have to be optimized.
+// Returns twice the triangle area, divide by two for actual area.
+// Was used by unit test to check get_hull_area(), so
+// doesn't have to be optimized.
 double Delaunator::get_triangle_area()
 {    
     std::vector<double> vals;

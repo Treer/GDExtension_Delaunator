@@ -3,7 +3,7 @@
 
 A fast library for Delaunay triangulation. It's currently managing 100,000 points in ~50ms on a 2015 processor (i7-6700).
 
-This GDExtension is still in alpha.
+This GDExtension is in alpha and I've switched to a C# implementation, so this might not get updated. It was probably a bit soon to try working with a GDExtension.
 
 See [Delaunator guide](https://mapbox.github.io/delaunator/) (how to get Voronoi polygons etc.) and [API reference](https://github.com/mapbox/delaunator#api-reference) for interim details, as documentation here is a work in progress
 
